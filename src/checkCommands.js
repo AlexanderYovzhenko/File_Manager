@@ -1,4 +1,6 @@
 import { Transform } from 'node:stream';
+import { calculateHash } from './operations/hash.js';
+import { osFunc } from './operations/os.js';
 import { 
   goodbyeString, 
   invalidCommandString, 
@@ -19,9 +21,6 @@ import {
   navigationPathToDirectory, 
   navigationUp 
 } from './operations/navigation.js';
-import { 
-  osFunc 
-} from './operations/os.js';
 
 const checkCommands = async (data) => {
   const command = data.trim();
@@ -81,21 +80,9 @@ const checkCommands = async (data) => {
         osFunc(oneCommandArgument);
         break;
 
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
-
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
-
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
-
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
+      case 'hash':
+        await calculateHash(oneCommandArgument);
+        break;
 
         // case 'mv':
         // await moveFile(oneCommandArgument, twoCommandArgument);
