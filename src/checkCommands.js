@@ -8,6 +8,14 @@ import {
   workingDirectoryString 
 } from './common/constants.js';
 import { 
+  copy,
+  createFile,
+  moveFile,
+  readFileFunc, 
+  removeFile, 
+  rename
+} from './operations/mainOperations.js';
+import { 
   navigationList,
   navigationPathToDirectory, 
   navigationUp 
@@ -26,7 +34,13 @@ const checkCommands = async (data) => {
       return invalidCommandString + '\n';
     }
 
-    const pathToDirectory = command.split(' ').slice(1).join(' ');
+    let pathToDirectory = command.split(' ').slice(1).join(' ');
+    let pathToNewDirectory = '';
+
+    if (command.split(' ').length === 3) {
+      pathToDirectory = command.split(' ').slice(1, -1).join(' ');
+      pathToNewDirectory = command.split(' ').slice(2).join(' ');
+    }
 
     switch (command.split(' ').shift()) {
       case 'up':
@@ -41,6 +55,59 @@ const checkCommands = async (data) => {
         await navigationList();
         break;
       
+      case 'cat':
+        await readFileFunc(pathToDirectory);
+        break;
+
+      case 'add':
+        await createFile(pathToDirectory);
+        break;
+
+      case 'rn':
+        await rename(pathToDirectory, pathToNewDirectory);
+        break;
+
+      case 'cp':
+        await copy(pathToDirectory, pathToNewDirectory);
+        break;
+
+      case 'mv':
+        await moveFile(pathToDirectory, pathToNewDirectory);
+        break;
+
+      case 'rm':
+        await removeFile(pathToDirectory);
+        break;
+
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
+        // case 'mv':
+        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // break;
+
       default:
         break;
     }

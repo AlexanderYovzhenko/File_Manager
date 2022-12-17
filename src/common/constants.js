@@ -14,7 +14,7 @@ const workingDirectoryObject = {
 
 const workingDirectoryString = `You are currently in `;
 
-const commandsArray = ['up', 'cd', 'ls'];
+const commandsArray = ['up', 'cd', 'ls', 'cat', 'add', 'rn', 'cp', 'mv', 'rm'];
 
 export {
   userName, 
