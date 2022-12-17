@@ -4,10 +4,16 @@ import {
   goodbyeString, 
   invalidCommandString, 
   operationErrorString, 
+  workingDirectoryObject, 
   workingDirectoryString 
 } from './common/constants.js';
+import { 
+  navigationList,
+  navigationPathToDirectory, 
+  navigationUp 
+} from './operations/navigation.js';
 
-const checkCommand = async (data) => {
+const checkCommands = async (data) => {
   const command = data.trim();
 
   try {
@@ -16,34 +22,38 @@ const checkCommand = async (data) => {
       return process.exit(0);
     }
 
-    if (!commandsArray.includes(command)) {
-      console.info(invalidCommandString);
-      return workingDirectoryString + '\n';
+    if (!commandsArray.includes(command.split(' ').shift())) {
+      return invalidCommandString + '\n';
     }
 
-    switch (command) {
+    const pathToDirectory = command.split(' ').slice(1).join(' ');
+
+    switch (command.split(' ').shift()) {
       case 'up':
-        console.log(1234214);
+        navigationUp();
         break;
 
-      case 'val':
-      
-      break;
+      case 'cd':
+        await navigationPathToDirectory(pathToDirectory);
+        break;
+
+      case 'ls':
+        await navigationList();
+        break;
       
       default:
         break;
     }
 
-    return workingDirectoryString + '\n';
+    return '';
   } catch (error) {
-    console.error(operationErrorString);
-    return workingDirectoryString + '\n';
+    return operationErrorString + '\n';
   }
 };
 
 const checkCommandLine = new Transform({
   async transform(chunk, encoding, callback) {
-    callback(null, await checkCommand(String(chunk)));
+    callback(null, await checkCommands(String(chunk)) + workingDirectoryString + workingDirectoryObject.workingDirectory + '\n');
   }
 });
 
