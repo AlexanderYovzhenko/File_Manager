@@ -1,6 +1,5 @@
 import { Transform } from 'node:stream';
 import { 
-  commandsArray, 
   goodbyeString, 
   invalidCommandString, 
   operationErrorString, 
@@ -20,6 +19,9 @@ import {
   navigationPathToDirectory, 
   navigationUp 
 } from './operations/navigation.js';
+import { 
+  osFunc 
+} from './operations/os.js';
 
 const checkCommands = async (data) => {
   const command = data.trim();
@@ -30,16 +32,12 @@ const checkCommands = async (data) => {
       return process.exit(0);
     }
 
-    if (!commandsArray.includes(command.split(' ').shift())) {
-      return invalidCommandString + '\n';
-    }
-
-    let pathToDirectory = command.split(' ').slice(1).join(' ');
-    let pathToNewDirectory = '';
+    let oneCommandArgument = command.split(' ').slice(1).join(' ');
+    let twoCommandArgument = '';
 
     if (command.split(' ').length === 3) {
-      pathToDirectory = command.split(' ').slice(1, -1).join(' ');
-      pathToNewDirectory = command.split(' ').slice(2).join(' ');
+      oneCommandArgument = command.split(' ').slice(1, -1).join(' ');
+      twoCommandArgument = command.split(' ').slice(2).join(' ');
     }
 
     switch (command.split(' ').shift()) {
@@ -48,7 +46,7 @@ const checkCommands = async (data) => {
         break;
 
       case 'cd':
-        await navigationPathToDirectory(pathToDirectory);
+        await navigationPathToDirectory(oneCommandArgument);
         break;
 
       case 'ls':
@@ -56,60 +54,59 @@ const checkCommands = async (data) => {
         break;
       
       case 'cat':
-        await readFileFunc(pathToDirectory);
+        await readFileFunc(oneCommandArgument);
         break;
 
       case 'add':
-        await createFile(pathToDirectory);
+        await createFile(oneCommandArgument);
         break;
 
       case 'rn':
-        await rename(pathToDirectory, pathToNewDirectory);
+        await rename(oneCommandArgument, twoCommandArgument);
         break;
 
       case 'cp':
-        await copy(pathToDirectory, pathToNewDirectory);
+        await copy(oneCommandArgument, twoCommandArgument);
         break;
 
       case 'mv':
-        await moveFile(pathToDirectory, pathToNewDirectory);
+        await moveFile(oneCommandArgument, twoCommandArgument);
         break;
 
       case 'rm':
-        await removeFile(pathToDirectory);
+        await removeFile(oneCommandArgument);
         break;
 
+      case 'os':
+        osFunc(oneCommandArgument);
+        break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
         // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
-        // break;
-
-        // case 'mv':
-        // await moveFile(pathToDirectory, pathToNewDirectory);
+        // await moveFile(oneCommandArgument, twoCommandArgument);
         // break;
 
       default:
-        break;
+        return invalidCommandString + '\n';
     }
 
     return '';
