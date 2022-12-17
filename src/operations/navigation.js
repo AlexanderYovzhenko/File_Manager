@@ -1,6 +1,6 @@
 import os from 'os';
 import { access, lstat, readdir } from 'fs/promises';
-import { workingDirectoryObject } from "../common/constants.js";
+import { operationErrorString, workingDirectoryObject } from "../common/constants.js";
 
 const navigationUp = () => {
   const path = workingDirectoryObject.workingDirectory;
