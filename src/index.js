@@ -3,6 +3,7 @@ import { checkCommandLine } from './checkCommands.js';
 import { 
   goodbyeString, 
   welcomeString, 
+  workingDirectoryObject, 
   workingDirectoryString 
 } from './common/constants.js';
 
@@ -17,7 +18,7 @@ const startFileManager = async () => {
     });
 
     console.info(welcomeString);
-    console.info(workingDirectoryString);
+    console.info(workingDirectoryString + workingDirectoryObject.workingDirectory);
 
     await pipeline(stdIn, checkCommandLine, stdOut);
   } catch (error) {
