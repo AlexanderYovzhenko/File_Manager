@@ -8,10 +8,13 @@ const goodbyeString = `Thank you for using File Manager, ${userName}, goodbye!`;
 const invalidCommandString = 'Invalid input';
 const operationErrorString = 'Operation failed';
 
-let workingDirectory = os.userInfo().homedir;
-const workingDirectoryString = `You are currently in ${workingDirectory}`;
+const workingDirectoryObject = {
+  workingDirectory: os.userInfo().homedir
+};
 
-const commandsArray = ['up'];
+const workingDirectoryString = `You are currently in `;
+
+const commandsArray = ['up', 'cd', 'ls'];
 
 export {
   userName, 
@@ -19,7 +22,7 @@ export {
   goodbyeString, 
   invalidCommandString, 
   operationErrorString,
-  workingDirectory,
   workingDirectoryString,
-  commandsArray
+  commandsArray,
+  workingDirectoryObject
 };
