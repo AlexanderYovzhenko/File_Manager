@@ -21,6 +21,10 @@ import {
   navigationPathToDirectory, 
   navigationUp 
 } from './operations/navigation.js';
+import { 
+  compress, 
+  decompress 
+} from './operations/zip.js';
 
 const checkCommands = async (data) => {
   const command = data.trim();
@@ -84,13 +88,13 @@ const checkCommands = async (data) => {
         await calculateHash(oneCommandArgument);
         break;
 
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
+      case 'compress':
+        await compress(oneCommandArgument, twoCommandArgument);
+        break;
 
-        // case 'mv':
-        // await moveFile(oneCommandArgument, twoCommandArgument);
-        // break;
+      case 'decompress':
+        await decompress(oneCommandArgument, twoCommandArgument);
+        break;
 
       default:
         return invalidCommandString + '\n';
