@@ -72,4 +72,4 @@ export {
   navigationUp,
   navigationPathToDirectory,
   navigationList
-}
+};
