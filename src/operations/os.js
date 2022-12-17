@@ -35,7 +35,8 @@ const osFunc = (argument) => {
         break;
     
       default:
-        return invalidCommandString + '\n';
+        console.info(invalidCommandString);
+        break;
     }
   } catch (error) {
     throw new Error(operationErrorString);

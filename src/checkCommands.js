@@ -1,4 +1,5 @@
 import { Transform } from 'node:stream';
+import os from 'os';
 import { calculateHash } from './operations/hash.js';
 import { osFunc } from './operations/os.js';
 import { 
@@ -38,7 +39,7 @@ const checkCommands = async (data) => {
     let oneCommandArgument = command.split(' ').slice(1).join(' ');
     let twoCommandArgument = '';
 
-    if (command.split(' ').length === 3) {
+    if (command.split(' ').length === 3 && os.userInfo().homedir !== workingDirectoryObject.workingDirectory + '\\' + command.split(' ').slice(1, -1).join(' ') + ' ' + command.split(' ').slice(2).join(' ')) {
       oneCommandArgument = command.split(' ').slice(1, -1).join(' ');
       twoCommandArgument = command.split(' ').slice(2).join(' ');
     }
